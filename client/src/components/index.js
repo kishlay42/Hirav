@@ -12,6 +12,7 @@ import MarketPlace from "./MarketPlace/MarketPlace";
 import News from "./News/News";
 import SignIn from "./SignIn/SignIn";
 import Services from "./Services/Services";
+import Accordion from "./usables/Accordion";
 export{
     NavBar,
     Home,
@@ -26,5 +27,6 @@ export{
     MarketPlace,
     News,
     SignIn,
-    Services
+    Services,
+    Accordion
 }
