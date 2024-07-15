@@ -10,6 +10,7 @@ About,
 MarketPlace,
 Services,
 SignIn,
+SignUp
 }from './components/index'
 import {
   Route,
@@ -28,6 +29,7 @@ const router =createBrowserRouter(
           <Route path="marketplace" element={<MarketPlace />} />
           <Route path="services" element={<Services />} />
           <Route path="signin" element={<SignIn />} />
+          <Route path="signup" element={<SignUp />} />
         </Route>
       )
 )

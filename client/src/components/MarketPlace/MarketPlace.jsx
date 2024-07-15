@@ -1,8 +1,9 @@
 import React from 'react'
+import NavBar from '../NavBar/NavBar'
 
 const MarketPlace = () => {
   return (
-    <div>MarketPlace</div>
+    <><NavBar/></>
   )
 }
 
