@@ -4,10 +4,10 @@ import './index.css'
 import Layout from './components/Layout'
 import{
 Home,
-ContactUs,
 News,
 About,
 MarketPlace,
+InvestmentPlanner,
 Services,
 SignIn,
 SignUp
@@ -23,7 +23,7 @@ const router =createBrowserRouter(
       createRoutesFromElements(
         <Route path="/" element={<Layout />}>
           <Route path="" element={<Home />} />
-          <Route path="contact" element={<ContactUs />} />
+          <Route path="invest" element={<InvestmentPlanner />} />
           <Route path="news" element={<News />} />
           <Route path="about" element={<About />} />
           <Route path="marketplace" element={<MarketPlace />} />

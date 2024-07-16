@@ -1,7 +1,7 @@
 import NavBar from "./NavBar/NavBar";
 import Home from "./Home/Home";
 import About from "./About/About";
-import ContactUs from "./ContactUs/ContactUs";
+import InvestmentPlanner from "./InvestmentPlanner/InvestmentPlanner";
 import Footer from "./Footer/Footer";
 import FaQs from "./HomeElements/FaQs";
 import GreenCredit from "./HomeElements/GreenCredit";
@@ -18,7 +18,7 @@ export{
     NavBar,
     Home,
     About,
-    ContactUs,
+    InvestmentPlanner,
     Footer,
     FaQs,
     GreenCredit,
