@@ -1,7 +1,40 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 const SignIn = () => {
+  const [formData, setFormData] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
+  // const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      return setErrorMessage('Please fill out all fields.');
+    }
+    try {
+      // setLoading(true);
+      setErrorMessage(null);
+      const res = await fetch('/server/auth/signin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return setErrorMessage(data.message);
+      }
+      setLoading(false);
+      if (res.ok) {
+        navigate('/');
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      // setLoading(false);
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex gap-5  ">
@@ -34,25 +67,27 @@ const SignIn = () => {
             <p className="self-stretch mt-4 text-base text-neutral-500 ">
               Sign In to explore your GCP investments and gain insights.
             </p>
-            <form className="flex flex-col items-center w-full max-w-[646px]">
-              <label htmlFor="emailInput" className="sr-only">
+            <form className="flex flex-col items-center w-full max-w-[646px]" onSubmit={handleSubmit} >
+              <label htmlFor="email" className="sr-only">
                 Email ID
               </label>
               <input
-                id="emailInput"
+                id="email"
                 type="email"
                 placeholder="Email ID"
+                onChange={handleChange}
                 className="justify-center items-start px-12 py-9 mt-16 w-full rounded-2xl bg-neutral-100 text-neutral-500 max-md:px-5 "
                 required
               />
               <div className="relative w-full mt-14 ">
-                <label htmlFor="passwordInput" className="sr-only">
+                <label htmlFor="password" className="sr-only">
                   Password
                 </label>
                 <input
-                  id="passwordInput"
+                  id="password"
                   type="password"
                   placeholder="Password"
+                  onChange={handleChange}
                   className="flex gap-5 justify-between px-16 py-8 w-full whitespace-nowrap rounded-2xl bg-neutral-100 text-neutral-500 max-md:flex-wrap max-md:px-5"
                   required
                 />
@@ -86,6 +121,9 @@ const SignIn = () => {
               Don't have an account yet?{" "}
               <Link to="/signup" className="font-semibold underline">Sign Up</Link>
             </div>
+            {errorMessage && (
+              <div className="mt-5 text-red-500 text-center">{errorMessage}</div>
+            )}
             <div className="flex gap-5 justify-center items-center self-stretch mt-10 text-2xl text-right whitespace-nowrap text-black text-opacity-60 max-md:flex-wrap ">
               <div className="shrink-0 self-stretch my-auto max-w-full h-px border border-solid bg-black bg-opacity-60 border-black border-opacity-60 w-[478px]" />
               <div className="self-stretch">or</div>

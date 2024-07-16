@@ -13,7 +13,7 @@ import News from "./News/News";
 import SignIn from "./SignIn/SignIn";
 import Services from "./Services/Services";
 import Accordion from "./usables/Accordion";
-import SignUp from "../SignUp/SignUp";
+import SignUp from "./SignUp/SignUp";
 export{
     NavBar,
     Home,

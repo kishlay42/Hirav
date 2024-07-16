@@ -33,7 +33,7 @@ const NavBar = () => {
              className={({ isActive }) =>
               `block py-2 pr-4 pl-3 duration-200 ${isActive ? "text-emerald-600" : "text-gray-700"
               } border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 hover:text-emerald-600 lg:p-0`
-            }>Contact us</NavLink>
+            }>Investment Planner</NavLink>
         </div>
         <Link to="/signup" className="justify-center px-5 py-1.5 font-black rounded-3xl border-black border-solid border-[3px]">
           Sign up
