@@ -2,6 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import Layout from './components/Layout'
+import { store, persistor } from './redux/store.js';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import{
 Home,
 News,
@@ -34,7 +37,10 @@ const router =createBrowserRouter(
       )
 )
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <PersistGate persistor={persistor}>
+  <Provider store={store}>
     <RouterProvider router={router} />
-  </React.StrictMode>,
+    </Provider>
+    </PersistGate>
+
 )

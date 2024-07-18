@@ -3,10 +3,11 @@ import InputField from "../SignUpUsable/InputField";
 import SocialSignUp from "../SignUpUsable/SocialSignUp";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { BeatLoader } from "react-spinners";
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
@@ -16,11 +17,11 @@ const SignUp = () => {
     if (!formData.fname || !formData.email || !formData.password) {
       return setErrorMessage("Please fill out all fields.");
     }
-    // if(formData.password !== formData.confirmPassword){
-    //   return setErrorMessage("Passwords do not match.");
-    // }
+    if (formData.password !== formData.confirmPassword) {
+      return setErrorMessage("Passwords do not match.");
+    }
     try {
-      // setLoading(true);
+      setLoading(true);
       setErrorMessage(null);
       const res = await fetch("/server/auth/signup", {
         method: "POST",
@@ -80,11 +81,11 @@ const SignUp = () => {
                   id="fname"
                   onChange={handleChange}
                 />
-                {/* <InputField
+                <InputField
                   placeholder="Last Name"
                   id="lname"
                   onChange={handleChange}
-                /> */}
+                />
               </div>
               <div className="flex gap-5 mt-5 text-xl ">
                 <InputField
@@ -92,7 +93,7 @@ const SignUp = () => {
                   id="email"
                   onChange={handleChange}
                 />
-                {/* <div className="flex flex-auto gap-5 justify-between px-16 py-8 whitespace-nowrap rounded-2xl bg-neutral-100   ">
+                <div className="flex flex-auto gap-5 justify-between px-16 py-8 whitespace-nowrap rounded-2xl bg-neutral-100   ">
                   <span className="self-stretch my-auto">+91</span>
                   <div className="shrink-0 self-start w-px border border-solid bg-stone-300 border-stone-300 h-[40px]" />
                   <input
@@ -101,7 +102,7 @@ const SignUp = () => {
                     className="flex-auto self-stretch my-auto bg-transparent outline-none"
                     aria-label="Phone Number"
                   />
-                </div>{" "} */}
+                </div>{" "}
               </div>
               <div className="flex gap-5 mt-5 text-xl ">
                 <InputField
@@ -110,15 +111,15 @@ const SignUp = () => {
                   id="password"
                   onChange={handleChange}
                 />
-                {/* <InputField
+                <InputField
                   placeholder="Confirm Password"
                   type="password"
                   id="confirmPassword"
                   onChange={handleChange}
-                /> */}
+                />
               </div>
               <div className="flex flex-col items-end mt-4 max-w-full text-black w-[912px]">
-                {/* <div className="flex gap-3.5 self-start text-base ">
+                <div className="flex gap-3.5 self-start text-base ">
                   <input
                     type="checkbox"
                     id="terms"
@@ -134,19 +135,26 @@ const SignUp = () => {
                       Privacy Policy
                     </span>
                   </label>
-                </div> */}
+                </div>
                 <button
                   type="submit"
+                  disabled={loading}
                   className="justify-center items-center px-16 py-8 mt-8 max-w-full text-3xl font-bold text-white bg-cyan-500 rounded-xl w-[671px] "
                 >
-                  Sign Up
+                  {loading ? (
+                    <>
+                      <BeatLoader color="#49d8c2" />
+                    </>
+                  ) : (
+                    "Sign Up"
+                  )}
                 </button>
-                {/* <p className="mt-4 mx-auto text-xl underline ">
+                <p className="mt-4 mx-auto text-xl underline ">
                   Have an account already?{" "}
                   <Link to="/signin" className="font-semibold underline">
                     Sign In
                   </Link>
-                </p> */}
+                </p>
               </div>
             </form>
             {errorMessage && (

@@ -1,10 +1,18 @@
 import React from "react";
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from "../../redux/user/userSlice";
+import { BeatLoader } from "react-spinners";
+import OAuth from "../usables/OAuth";
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [errorMessage, setErrorMessage] = useState(null);
-  // const [loading, setLoading] = useState(false);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
@@ -12,27 +20,25 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.email || !formData.password) {
-      return setErrorMessage('Please fill out all fields.');
+      return dispatch(signInFailure("Please fill all the fields"));
     }
     try {
-      // setLoading(true);
-      setErrorMessage(null);
-      const res = await fetch('/server/auth/signin', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      dispatch(signInStart());
+      const res = await fetch("/server/auth/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
       if (data.success === false) {
-        return setErrorMessage(data.message);
+        dispatch(signInFailure(data.message));
       }
-      setLoading(false);
+      dispatch(signInSuccess(data));
       if (res.ok) {
-        navigate('/');
+        navigate("/");
       }
     } catch (error) {
-      setErrorMessage(error.message);
-      // setLoading(false);
+      dispatch(signInFailure(error.message));
     }
   };
   return (
@@ -46,7 +52,10 @@ const SignIn = () => {
               className="object-cover absolute inset-0 size-full"
               alt=""
             />
-            <Link to="/" className="relative self-start ml-4 font-black text-black">
+            <Link
+              to="/"
+              className="relative self-start ml-4 font-black text-black"
+            >
               HIRAV
             </Link>
             <h2 className="relative self-start mt-44 ml-3 text-5xl font-extrabold ">
@@ -67,7 +76,10 @@ const SignIn = () => {
             <p className="self-stretch mt-4 text-base text-neutral-500 ">
               Sign In to explore your GCP investments and gain insights.
             </p>
-            <form className="flex flex-col items-center w-full max-w-[646px]" onSubmit={handleSubmit} >
+            <form
+              className="flex flex-col items-center w-full max-w-[646px]"
+              onSubmit={handleSubmit}
+            >
               <label htmlFor="email" className="sr-only">
                 Email ID
               </label>
@@ -112,17 +124,28 @@ const SignIn = () => {
               </div>
               <button
                 type="submit"
+                disabled={loading}
                 className="justify-center items-center px-16 py-8 mt-14 max-w-full text-3xl font-bold text-white bg-cyan-500 rounded-xl w-[697px] max-md:px-5 "
               >
-                SignIn
+                {loading ? (
+                  <>
+                  <BeatLoader color="#49d8c2" />
+                  </>
+                ) : (
+                  "Sign In"
+                )}
               </button>
             </form>
             <div className="mt-7 text-black underline ">
               Don't have an account yet?{" "}
-              <Link to="/signup" className="font-semibold underline">Sign Up</Link>
+              <Link to="/signup" className="font-semibold underline">
+                Sign Up
+              </Link>
             </div>
             {errorMessage && (
-              <div className="mt-5 text-red-500 text-center">{errorMessage}</div>
+              <div className="mt-5 text-red-500 text-center">
+                {errorMessage}
+              </div>
             )}
             <div className="flex gap-5 justify-center items-center self-stretch mt-10 text-2xl text-right whitespace-nowrap text-black text-opacity-60 max-md:flex-wrap ">
               <div className="shrink-0 self-stretch my-auto max-w-full h-px border border-solid bg-black bg-opacity-60 border-black border-opacity-60 w-[478px]" />
@@ -130,15 +153,7 @@ const SignIn = () => {
               <div className="shrink-0 self-stretch my-auto max-w-full h-px border border-solid bg-black bg-opacity-60 border-black border-opacity-60 w-[634px]" />
             </div>
             <div className="flex gap-5 justify-between mt-6 max-w-full text-black w-[802px] max-md:flex-wrap max-md:pr-5 ">
-              <button className="flex gap-4 px-5 py-2.5 border border-solid border-neutral-500 rounded-[33px]">
-                <img
-                  loading="lazy"
-                  src="/img/googleIcon.png"
-                  className="shrink-0  aspect-square w-[30px]"
-                  alt="Google logo"
-                />
-                <span className="flex-auto my-auto">Sign Up with Google</span>
-              </button>
+              <OAuth />
               <img
                 loading="lazy"
                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/ec592c6809f337627cd0faf7f4249963d287f924b4652cea1d1333113544248f?apiKey=a47822eff5b2450ea0b6389b3ea53a3d&"
