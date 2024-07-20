@@ -14,6 +14,7 @@ import SignIn from "./SignIn/SignIn";
 import Services from "./Services/Services";
 import Accordion from "./usables/Accordion";
 import SignUp from "./SignUp/SignUp";
+import Dashboard from "./Dashboard/Dashboard";
 export{
     NavBar,
     Home,
@@ -30,5 +31,6 @@ export{
     SignUp,
     SignIn,
     Services,
-    Accordion
+    Accordion,
+    Dashboard
 }

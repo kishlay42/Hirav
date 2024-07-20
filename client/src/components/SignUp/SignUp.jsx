@@ -4,6 +4,7 @@ import SocialSignUp from "../SignUpUsable/SocialSignUp";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BeatLoader } from "react-spinners";
+import OAuth from "../usables/OAuth";
 const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [errorMessage, setErrorMessage] = useState(null);
@@ -166,7 +167,7 @@ const SignUp = () => {
               <div className="shrink-0 self-stretch my-auto max-w-full h-px border border-solid bg-black bg-opacity-60 border-black border-opacity-60 w-[582px]" />
             </div>
             <div className="flex gap-5 justify-between self-center mt-2 max-w-full text-xl text-black w-[782px] pb-10 ">
-              <SocialSignUp provider="Google" icon="\img\googleIcon.png" />
+              <OAuth />
               <SocialSignUp provider="Facebook" icon="\img\facebookIcon.png" />
             </div>
           </div>

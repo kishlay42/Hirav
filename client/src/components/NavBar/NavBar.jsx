@@ -1,11 +1,28 @@
 import React from 'react'
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
-import { Avatar, Dropdown } from 'flowbite-react';
-import { useSelector } from 'react-redux';
+import { Link, NavLink,} from "react-router-dom";
+import { Dropdown } from 'flowbite-react';
+import { useSelector,useDispatch } from 'react-redux';
+import { signoutSuccess } from '../../redux/user/userSlice';
+
 
 const NavBar = () => {
-  const path = useLocation().pathname;
     const { currentUser } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    const handleSignout = async () => {
+      try {
+        const res = await fetch('/server/user/signout', {
+          method: 'POST',
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          console.log(data.message);
+        } else {
+          dispatch(signoutSuccess());
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
   return (
     <div className="w-5/6 mx-auto flex gap-5 text-black max-md:flex-wrap  py-12 px-6">
       <NavLink to="/" className="flex-auto my-auto text-3xl font-black">HIRAV</NavLink>
@@ -54,11 +71,11 @@ const NavBar = () => {
             </Dropdown.Header>
             <hr />
             <Link to={'/dashboard?tab=profile'}>
-              <Dropdown.Item>Profile</Dropdown.Item>
+              <Link to="dashboard">Profile</Link>
             </Link>
             <Dropdown.Divider />
             <hr />
-            <Dropdown.Item>Sign out</Dropdown.Item>
+            <Dropdown.Item onClick={handleSignout}>Sign out</Dropdown.Item>
           </Dropdown>
         ) : (
           <Link to="/signin" className="justify-center px-5 py-1.5 font-black rounded-3xl border-black border-solid border-[3px]">

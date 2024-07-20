@@ -13,7 +13,8 @@ MarketPlace,
 InvestmentPlanner,
 Services,
 SignIn,
-SignUp
+SignUp,
+Dashboard
 }from './components/index'
 import {
   Route,
@@ -33,6 +34,7 @@ const router =createBrowserRouter(
           <Route path="services" element={<Services />} />
           <Route path="signin" element={<SignIn />} />
           <Route path="signup" element={<SignUp />} />
+          <Route path="dashboard" element={<Dashboard />} />
         </Route>
       )
 )
