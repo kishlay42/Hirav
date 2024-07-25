@@ -71,7 +71,7 @@ const NavBar = () => {
             </Dropdown.Header>
             <hr />
             <Link to={'/dashboard?tab=profile'}>
-              <Link to="dashboard">Profile</Link>
+              <Link to="dashboard" className='text-sm ml-5'>Profile</Link>
             </Link>
             <Dropdown.Divider />
             <hr />

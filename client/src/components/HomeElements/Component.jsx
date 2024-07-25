@@ -6,7 +6,8 @@ const Component = () => {
   var settings = {
     dots: false,
     infinite: true,
-    speed: 800,
+    autoplay: true,
+    speed: 1200,
     slidesToShow: 1,
     slidesToScroll: 1,
   };

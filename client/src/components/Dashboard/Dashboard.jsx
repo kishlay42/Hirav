@@ -6,6 +6,7 @@ import InvestmentOpportunities from "./InvestmentOpportunities";
 import EcoLabelledProducts from "./EcoLabelledProducts";
 import Testimonial from "./Testimonial";
 import UserProfile from "./UserProfile";
+import TransactionList from "./TransactionList";
 
 const Dashboard = () => {
   return (
@@ -25,7 +26,7 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
-                      <InvestmentOpportunities />
+                      <TransactionList />
                     </div>
                   </div>
                 </div>
@@ -38,10 +39,10 @@ const Dashboard = () => {
                         className="grow mt-3 w-full aspect-[2.56] max-md:mt-6 max-md:max-w-full"
                       />
                     </div>
-                    <div className="flex flex-col ml-5 w-[18%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col mt-10 ml-5 w-[18%] max-md:ml-0 max-md:w-full">
                       <EcoLabelledProducts />
                     </div>
-                    <div className="flex flex-col ml-5 w-[37%] max-md:ml-0 max-md:w-full">
+                    <div className="flex flex-col mt-10 ml-5 w-[37%] max-md:ml-0 max-md:w-full">
                       <Testimonial />
                     </div>
                   </div>
